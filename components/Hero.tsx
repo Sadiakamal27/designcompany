@@ -31,7 +31,7 @@ export function Hero() {
             href="#contact"
             className="rounded-full px-8 text-[10px]"
           >
-            Message
+            Schedule a call
           </Button>
 
           <Button
