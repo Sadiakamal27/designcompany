@@ -7,8 +7,10 @@ export default defineConfig({
   name: "default",
   title: "Design Company Studio",
 
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "ag0d5gd5",
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  projectId:
+    process.env.SANITY_STUDIO_PROJECT_ID || "",
+  dataset:
+    process.env.SANITY_STUDIO_DATASET || "",
 
   basePath: "/admin",
 

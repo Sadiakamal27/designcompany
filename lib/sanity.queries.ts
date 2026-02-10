@@ -2,7 +2,7 @@ import { client } from "./sanity.client";
 
 // Fetch all portfolio items with fallback to JSON
 export async function getPortfolioItems() {
-  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+  const projectId = process.env.SANITY_PROJECT_ID;
 
   if (!projectId || projectId === "your_project_id_here") {
     console.warn("Sanity Project ID not set, falling back to local JSON data");
