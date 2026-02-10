@@ -20,7 +20,10 @@ export function ShowcaseItem({ project, isFirst, index }: ShowcaseItemProps) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        // Once visible, keep it visible (don't hide when scrolling past)
+        if (entry.isIntersecting) {
+          setIsVisible((prev) => prev ? prev : true);
+        }
 
         // Auto-play video when in view
         if (videoRef.current) {
@@ -34,17 +37,19 @@ export function ShowcaseItem({ project, isFirst, index }: ShowcaseItemProps) {
         }
       },
       {
-        threshold: 0.3,
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px',
       },
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
@@ -62,13 +67,15 @@ export function ShowcaseItem({ project, isFirst, index }: ShowcaseItemProps) {
   return (
     <div ref={sectionRef}>
       <div
-        className={`container mx-auto px-6 lg:px-8 ${isFirst ? "pb-24 lg:pb-32 pt-0" : "py-24 lg:py-32"}`}
+        className={`${
+          isFirst ? "pb-24 lg:pb-32 pt-0" : "py-24 lg:py-32"
+        }`}
       >
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start px-4 sm:px-6 lg:px-8">
           {/* Left Column - Sticky Description */}
           <div className="lg:col-span-3 lg:sticky lg:top-40">
             <div
-              className={`transition-all duration-1000 ${
+              className={`transition-opacity transition-transform duration-1000 ease-out ${
                 isVisible
                   ? "opacity-100 translate-x-0"
                   : "opacity-0 -translate-x-8"
@@ -113,16 +120,16 @@ export function ShowcaseItem({ project, isFirst, index }: ShowcaseItemProps) {
             </div>
           </div>
 
-          {/* Center Column - Large Media (Centered) */}
-          <div className="lg:col-span-6 lg:col-start-4">
+          {/* Center Column - Large Media (Extends to right edge with equal padding) */}
+          <div className="lg:col-span-9 lg:col-start-4 relative">
             <div
-              className={`w-full space-y-8 transition-all duration-1000 delay-200 ${
+              className={`w-full space-y-8 transition-opacity transition-transform duration-1000 delay-200 ease-out ${
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-12"
               }`}
             >
-              <div className="relative aspect-[4/5] lg:aspect-[16/10] bg-zinc-50 rounded-lg overflow-hidden group shadow-sm mx-auto border border-border/50">
+              <div className="relative aspect-[4/5] lg:aspect-[16/10] bg-zinc-50 rounded-lg overflow-hidden group shadow-sm border border-border/50">
                 {/* Show uploaded video file first */}
                 {uploadedVideoUrl ? (
                   <video
@@ -166,7 +173,7 @@ export function ShowcaseItem({ project, isFirst, index }: ShowcaseItemProps) {
                     alt={project.mainImage.alt || project.title}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="100vw"
                     priority={isFirst}
                   />
                 ) : project.images && project.images.length > 0 ? (
@@ -175,7 +182,7 @@ export function ShowcaseItem({ project, isFirst, index }: ShowcaseItemProps) {
                     alt={project.title}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="100vw"
                     priority={isFirst}
                   />
                 ) : (
@@ -200,7 +207,7 @@ export function ShowcaseItem({ project, isFirst, index }: ShowcaseItemProps) {
                         alt={image.alt || `${project.title} detail ${idx + 1}`}
                         fill
                         className="object-cover transition-transform duration-700 group-hover/img:scale-105"
-                        sizes="(max-width: 768px) 100vw, 50vw"
+                        sizes="100vw"
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover/img:bg-black/5 transition-colors duration-300" />
                     </div>
@@ -210,7 +217,7 @@ export function ShowcaseItem({ project, isFirst, index }: ShowcaseItemProps) {
 
               {/* Rich Text Content at the End */}
               {project.content && (
-                <div className="pt-8 border-t border-border/30">
+                <div className="pt-8 border-t border-border/30 px-4 sm:px-6 lg:px-8">
                   <div className="prose prose-sm lg:prose-base prose-zinc dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
                     <PortableText value={project.content} />
                   </div>
