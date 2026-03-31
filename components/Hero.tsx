@@ -7,7 +7,7 @@ export async function Hero() {
   const backgroundVideoUrl = siteSettings?.heroBackgroundVideo;
 
   return (
-    <Section fullWidth className="flex flex-col pt-32 lg:pt-40 px-6 lg:px-8 relative overflow-hidden h-screen h-[100dvh]">
+    <Section fullWidth className="flex flex-col pt-10 lg:pt-20 px-6 lg:px-8 relative overflow-hidden h-screen h-[100dvh]">
       {/* Background Video */}
       {backgroundVideoUrl && (
         <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
