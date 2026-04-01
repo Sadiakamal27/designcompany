@@ -7,16 +7,19 @@ export async function Hero() {
   const backgroundVideoUrl = siteSettings?.heroBackgroundVideo;
 
   return (
-    <Section fullWidth className="flex flex-col pt-10 lg:pt-20 px-6 lg:px-8 relative overflow-hidden h-screen h-[100dvh]">
+    <Section
+      fullWidth
+      className="flex flex-col pt-20 lg:pt-20 px-6 lg:px-8 relative overflow-hidden min-h-[100svh] lg:min-h-[100dvh] bg-white"
+    >
       {/* Background Video */}
       {backgroundVideoUrl && (
-        <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+        <div className="absolute inset-0 w-full h-[105%] -top-[2.5%] z-0 overflow-hidden">
           <video
             autoPlay
             muted
             loop
             playsInline
-            className="w-full h-full object-cover opacity-100"
+            className="w-full h-full object-cover object-[50%_30%] md:object-cover opacity-100"
           >
             <source src={backgroundVideoUrl} type="video/mp4" />
           </video>
