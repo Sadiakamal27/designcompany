@@ -2,6 +2,7 @@ import React from "react";
 import { Section } from "./ui/Section";
 import { getPortfolioItems, getSiteSettings } from "@/lib/contentful.queries";
 import { ShowcaseItem } from "./ShowcaseItem";
+import { Footer } from "./Footer";
 
 export async function PortfolioShowcase() {
   // Fetch portfolio items and site settings from Contentful
@@ -114,29 +115,52 @@ export async function PortfolioShowcase() {
       </Section>
 
       {/* Call to Action Section */}
-      <Section id="contact" className="pt-0 pb-24 lg:pb-32">
-        <div className="max-w-xl mx-auto text-center space-y-6">
-          <h3 className="text-base lg:text-lg text-foreground font-semibold leading-tight">
-            Have a roadmap you need to move faster?
-          </h3>
-          <p className="text-xs text-muted leading-relaxed max-w-sm mx-auto">
-            Share where your product is today and where you want it to be. We’ll
-            respond with a clear plan, timelines and next steps.
-          </p>
-          <div className="flex flex-col items-center gap-3">
-            <a
-              href="mailto:hello@designcompany.com"
-              className="inline-flex items-center justify-center rounded-full px-8 py-2 text-[10px] font-semibold bg-foreground text-background hover:opacity-90 transition-opacity"
-            >
-              Email us your project
-            </a>
-            <a
-              href="https://wa.me/yournumber"
-              className="text-[10px] text-[#25D366] underline hover:opacity-80"
-            >
-              Or send a Whatsapp message
-            </a>
+      <Section
+        id="contact"
+        fullWidth
+        className="flex flex-col relative overflow-hidden min-h-[100svh] lg:min-h-[100dvh] !py-0"
+      >
+        {/* Background Video - User to add source later */}
+        <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover opacity-100"
+          >
+            <source src="Seashell.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <div className="flex-1 flex items-center justify-center relative z-10 px-6 lg:px-8">
+          <div className="max-w-xl mx-auto text-center space-y-6">
+            <h3 className="text-base lg:text-lg text-foreground font-semibold leading-tight">
+              Have a roadmap you need to move faster?
+            </h3>
+            <p className="text-xs text-muted leading-relaxed max-w-sm mx-auto">
+              Share where your product is today and where you want it to be. We’ll
+              respond with a clear plan, timelines and next steps.
+            </p>
+            <div className="flex flex-col items-center gap-3">
+              <a
+                href="mailto:hello@designcompany.com"
+                className="inline-flex items-center justify-center rounded-full px-8 py-2 text-[10px] font-semibold bg-foreground text-background hover:opacity-90 transition-opacity"
+              >
+                Email us your project
+              </a>
+              <a
+                href="https://wa.me/yournumber"
+                className="text-[10px] text-[#25D366] underline hover:opacity-80"
+              >
+                Or send a Whatsapp message
+              </a>
+            </div>
           </div>
+        </div>
+        
+        <div className="relative z-10">
+          <Footer forceShow />
         </div>
       </Section>
     </div>
